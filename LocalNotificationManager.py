@@ -3,9 +3,9 @@ import desktop_notify
 import desktop_notify.aio
 
 
-class NotificationManager:
+class LocalNotificationManager:
     def __init__(self):
-        self.notify_server = desktop_notify.aio.Server("PBNS")
+        self.notify_server = desktop_notify.aio.Server("notify-mirror")
 
     def create_local_notification(self, header, body):
         new_notification = self.notify_server.Notify(header, body)

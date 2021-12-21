@@ -3,7 +3,7 @@
 import asyncio
 from pprint import pprint
 import asyncio_glib
-from AsyncPushbullet import AsyncPushbulletManager
+from AsyncPushbulletClient import AsyncPushbulletClient
 
 from ConfigManager import ConfigManager
 from os import popen
@@ -35,7 +35,7 @@ def get_notification_from_ephemeral(ephemeral):
             return n
 
 
-def on_local_notification_clicked(notification, event, _):
+def on_local_notification_user_clicked(notification, event, _):
     print("notification clicked")
     command = config_manager.get_ephemeral_setting(
         active_mirrored_notifications[notification]
@@ -46,7 +46,7 @@ def on_local_notification_clicked(notification, event, _):
         popen(command)
 
 
-def on_local_notification_closed(notification):
+def on_local_notification_user_closed(notification):
     closed_reasons = {
         1: "EXPIRED",
         2: "DISMISSED",
@@ -80,10 +80,13 @@ def on_local_notification_closed(notification):
 def on_new_notification_ephemeral(ephemeral):
     print(f"new {ephemeral['type']} ephemeral")
 
-    found_notification = get_notification_from_ephemeral(ephemeral)
-    if found_notification != None:
-        found_notification.close()
-        active_mirrored_notifications.pop(found_notification)
+    # update local info if existing
+    # if found in local notification then close and remove from local
+    if ephemeral["type"] == "dismissal":
+        found_notification = get_notification_from_ephemeral(ephemeral)
+        if found_notification != None:
+            found_notification.close()
+            active_mirrored_notifications.pop(found_notification)
 
     if ephemeral["type"] == "mirror" and ephemeral["dismissible"]:
         # create local notificaion
@@ -103,8 +106,10 @@ def on_new_notification_ephemeral(ephemeral):
         # new_notification.set_image_from_pixbuf(get_pixbuf_from_ephemeral(pb_ephemeral))
 
         # connect callbacks
-        new_notification.add_action("default", "_", on_local_notification_clicked, None)
-        new_notification.connect("closed", on_local_notification_closed)
+        new_notification.add_action(
+            "default", "_", on_local_notification_user_clicked, None
+        )
+        new_notification.connect("closed", on_local_notification_user_closed)
 
         new_notification.show()
         active_mirrored_notifications[new_notification] = ephemeral
@@ -115,15 +120,15 @@ def main():
 
     config_manager = ConfigManager()
 
-    if not Notify.init("PBNM"):
-        print("error starting libnotify")
+    # if not Notify.init("notify-mirror"):
+    # print("error starting libnotify")
 
-    pushbullet_manager = AsyncPushbulletManager(config_manager.get_api_key())
-    asyncio.run(
-        pushbullet_manager.receive_notification_ephemerals(
-            on_new_notification_ephemeral
-        )
-    )
+    pushbullet_manager = AsyncPushbulletClient(config_manager.get_api_key())
+    # asyncio.run(
+    #     pushbullet_manager.receive_notification_ephemerals(
+    #         on_new_notification_ephemeral
+    #     )
+    # )
 
 
 if __name__ == "__main__":
