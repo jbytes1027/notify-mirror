@@ -1,9 +1,17 @@
 from abc import abstractmethod
 
 
-class RemoteNotificationClient:
+class RemoteNotificationListener:
     def __init__(self):
         self._listeners = []
+
+    @abstractmethod
+    def start(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def stop(self):
+        raise NotImplementedError()
 
     @abstractmethod
     def dismiss(self, notification):

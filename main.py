@@ -3,7 +3,7 @@
 import asyncio
 from pprint import pprint
 import asyncio_glib
-from AsyncPushbulletClient import AsyncPushbulletClient
+from AsyncPushbulletListener import AsyncPushbulletListener
 
 from ConfigManager import ConfigManager
 from os import popen
@@ -123,7 +123,9 @@ def main():
     # if not Notify.init("notify-mirror"):
     # print("error starting libnotify")
 
-    pushbullet_manager = AsyncPushbulletClient(config_manager.get_api_key())
+    pushbullet_listener = AsyncPushbulletListener(config_manager.get_api_key())
+    pushbullet_listener.start()
+    print("started pb")
     # asyncio.run(
     #     pushbullet_manager.receive_notification_ephemerals(
     #         on_new_notification_ephemeral
