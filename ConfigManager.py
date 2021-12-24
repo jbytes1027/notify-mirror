@@ -1,7 +1,7 @@
 import pathlib
 import configparser
 
-DEFAULT_CONFIG_PATH = "~/.config/PBNM.ini"
+DEFAULT_CONFIG_PATH = "~/.config/notify-sync.ini"
 
 
 class ConfigManager:

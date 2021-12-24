@@ -1,25 +1,26 @@
 from abc import abstractmethod
 
 
-class RemoteNotificationListener:
+class AsyncRemoteNotificationListener:
     def __init__(self):
         self._listeners = []
 
     @abstractmethod
-    def start(self):
+    async def start(self):
         raise NotImplementedError()
 
     @abstractmethod
-    def stop(self):
+    async def stop(self):
         raise NotImplementedError()
 
     @abstractmethod
     def dismiss(self, notification):
         raise NotImplementedError()
 
-    def _update_listeners(self, notification):
+    def _update_listeners(self, android_notification):
+        print("updating listeners")
         for listener in self._listeners:
-            listener.update(notification)
+            listener.on_new(android_notification)
 
     def add_listener(self, listener):
         self._listeners.append(listener)
