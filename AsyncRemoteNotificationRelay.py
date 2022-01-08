@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class AsyncRemoteNotificationListener:
+class AsyncRemoteNotificationRelay:
     def __init__(self):
         self._listeners = []
 

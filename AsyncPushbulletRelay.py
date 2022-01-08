@@ -4,14 +4,14 @@ import json
 import aiohttp
 from pprint import pprint
 from AndroidNotification import AndroidNotification
-from RemoteNotificationManager import AsyncRemoteNotificationListener
+from AsyncRemoteNotificationRelay import AsyncRemoteNotificationRelay
 
 BASE_URL_WSS = "wss://stream.pushbullet.com/websocket/"
 BASE_URL_EPHEMERALS = "https://api.pushbullet.com/v2/ephemerals"
 BASE_URL_USER = "https://api.pushbullet.com/v2/users/me"
 
 
-class AsyncPushbulletListener(AsyncRemoteNotificationListener):
+class AsyncPushbulletRelay(AsyncRemoteNotificationRelay):
     def __init__(self, api_key):
         super().__init__()
         self.api_key = api_key
