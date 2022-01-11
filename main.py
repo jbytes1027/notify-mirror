@@ -3,13 +3,13 @@
 import asyncio
 from pprint import pprint
 import asyncio_glib
-from AsyncPushbulletRelay import AsyncPushbulletRelay
-from TestNotificationRelay import TestNotificationRelay
+from async_pushbullet_relay import AsyncPushbulletRelay
+from test_notification_relay import TestNotificationRelay
 
-from ConfigManager import ConfigManager
+from config_manager import ConfigManager
 from os import popen
 
-from LocalNotificationManager import LocalNotificationManager
+from local_notification_manager import LocalNotificationManager
 
 
 def main():

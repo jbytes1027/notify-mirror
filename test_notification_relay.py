@@ -1,6 +1,6 @@
 import asyncio
-from AndroidNotification import AndroidNotification
-from AsyncRemoteNotificationRelay import AsyncRemoteNotificationRelay
+from android_notification import AndroidNotification
+from async_remote_notification_relay import AsyncRemoteNotificationRelay
 
 
 class TestNotificationRelay(AsyncRemoteNotificationRelay):

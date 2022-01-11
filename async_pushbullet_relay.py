@@ -3,8 +3,8 @@ import websockets
 import json
 import aiohttp
 from pprint import pprint
-from AndroidNotification import AndroidNotification
-from AsyncRemoteNotificationRelay import AsyncRemoteNotificationRelay
+from android_notification import AndroidNotification
+from async_remote_notification_relay import AsyncRemoteNotificationRelay
 
 BASE_URL_WSS = "wss://stream.pushbullet.com/websocket/"
 BASE_URL_EPHEMERALS = "https://api.pushbullet.com/v2/ephemerals"
