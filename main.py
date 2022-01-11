@@ -11,16 +11,6 @@ from os import popen
 
 from LocalNotificationManager import LocalNotificationManager
 
-# def on_local_notification_user_clicked(notification, event, _):
-#     print("notification clicked")
-#     command = config_manager.get_ephemeral_setting(
-#         active_mirrored_notifications[notification]
-#     )
-#     if command == "":
-#         return
-#     else:
-#         popen(command)
-
 
 def main():
     asyncio.set_event_loop_policy(asyncio_glib.GLibEventLoopPolicy())
@@ -40,12 +30,6 @@ def main():
         event_loop.run_forever()
     except KeyboardInterrupt:
         print("program closed")
-
-    # asyncio.run(
-    #     pushbullet_manager.receive_notification_ephemerals(
-    #         on_new_notification_ephemeral
-    #     )
-    # )
 
 
 if __name__ == "__main__":
