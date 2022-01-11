@@ -5,6 +5,11 @@ DEFAULT_CONFIG_PATH = "~/.config/notify-sync.ini"
 
 
 class ConfigManager:
+    SETTING_NOTIFICATION_ICON = "icon"
+    SETTING_NOTIFICATION_TIMEOUT = "timeout"  # in ms
+    # SETTING_NOTIFICATION_URGENCY = "urgency"  # 0,1,2   low, avg, urgent
+    SETTING_NOTIFICATION_EXEC = "exec_on_click"
+
     def __init__(self, config_path=DEFAULT_CONFIG_PATH):
         self.config_path = config_path
         self.config = configparser.ConfigParser()
@@ -30,7 +35,7 @@ class ConfigManager:
             self.config["DEFAULT NOTIFICATION"] = {
                 "icon": "given",
                 "timeout": "default",
-                "urgency": "default",
+                # "urgency": "default",
                 "exec_on_click": "",
             }
 
@@ -38,12 +43,12 @@ class ConfigManager:
             with open(path, "w") as config_file:
                 self.config.write(config_file)
 
-    def get_ephemeral_setting(self, ephemeral, setting):
+    def get_notification_setting(self, android_notification, setting):
         if (
-            ephemeral["package_name"] in self.config
-            and setting in self.config[ephemeral["package_name"]]
+            android_notification.package in self.config
+            and setting in self.config[android_notification.package]
         ):
-            return self.config[ephemeral["package_name"]][setting]
+            return self.config[android_notification.package][setting]
         else:
             return self.config["DEFAULT NOTIFICATION"][setting]
 
