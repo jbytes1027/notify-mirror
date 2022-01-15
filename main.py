@@ -1,21 +1,33 @@
 #!/usr/bin/env python3
 
 import asyncio
-from pprint import pprint
 import asyncio_glib
 from async_pushbullet_relay import AsyncPushbulletRelay
 from test_notification_relay import TestNotificationRelay
 
 from config_manager import ConfigManager
-from os import popen
+import os
 
 from local_notification_manager import LocalNotificationManager
 
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        help="config file path",
+        default=ConfigManager.DEFAULT_CONFIG_PATH,
+    )
+    args = parser.parse_args()
+
+    # setup event loop
     asyncio.set_event_loop_policy(asyncio_glib.GLibEventLoopPolicy())
 
-    config_manager = ConfigManager()
+    config_manager = ConfigManager(args.config)
     # remote_relay = AsyncPushbulletRelay(config_manager.get_api_key())
     remote_relay = TestNotificationRelay()
 

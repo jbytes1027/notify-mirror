@@ -1,10 +1,9 @@
 import pathlib
 import configparser
 
-DEFAULT_CONFIG_PATH = "~/.config/notify-sync.ini"
-
 
 class ConfigManager:
+    DEFAULT_CONFIG_PATH = "~/.config/notify-sync.ini"
     SETTING_NOTIFICATION_ICON = "icon"
     SETTING_NOTIFICATION_TIMEOUT = "timeout"  # in ms
     # SETTING_NOTIFICATION_URGENCY = "urgency"  # 0,1,2   low, avg, urgent
