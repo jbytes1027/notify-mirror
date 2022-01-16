@@ -39,7 +39,8 @@ class LocalNotificationManager:
         print("new notification received")
 
         local_notification = self.notify_server.Notify(
-            android_notification.header, android_notification.body
+            android_notification.application + " | " + android_notification.header,
+            android_notification.body,
         )
         local_notification.set_on_close(self.on_local_closed)
 
